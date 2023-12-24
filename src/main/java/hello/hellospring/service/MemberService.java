@@ -2,13 +2,13 @@ package hello.hellospring.service;
 
 import hello.hellospring.domain.Member;
 import hello.hellospring.repository.MemberRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 //@Service
+@Transactional
 public class MemberService {
     private final MemberRepository memberRepository;
 
@@ -23,9 +23,7 @@ public class MemberService {
         // Optional 바로 반환을 권하지 않는다,,
 //        Optional<Member> result = memberRepository.findByName(member.getName());
 
-        // 아래와 같은 방식을 권장한다.
         validateDuplicateMember(member);
-
         memberRepository.save(member);
         return member.getId();
     }
